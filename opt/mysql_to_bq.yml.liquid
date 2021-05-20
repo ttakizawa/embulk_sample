@@ -1,0 +1,28 @@
+in:
+  type: mysql
+  host: {{ env.MYSQL_HOST }}
+  port: {{ env.MYSQL_PORT }}
+  user: {{ env.MYSQL_USER }}
+  password: {{ env.MYSQL_PASS }}
+  database: {{ env.MYSQL_DB }}
+  table: {{ env.MYSQL_TABLE }}
+  incremental: true
+  incremental_columns:
+    - update_time
+    - id
+out:
+  type: bigquery
+  auth_method: json_key
+  json_keyfile: {{ env.GCP_CREDENTIAL }}
+  path_prefix: /tmp/ # 一時ファイル作成場所
+  file_ext: .csv.gz
+  source_format: CSV
+  project: {{ env.GCP_PROJECT_ID }}
+  dataset: {{ env.DATASET_NAME }}
+  location: {{ env.GCP_LOCATION }}
+  default_timezone: Asia/Tokyo
+  auto_create_table: true # 自動でTBL生成
+  table: sample_mysql
+  formatter: {type: csv, charset: UTF-8, delimiter: ',', header_line: false}
+  encoders:
+  - {type: gzip}

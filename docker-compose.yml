@@ -1,0 +1,11 @@
+version: '2'
+services:
+  embulk:
+    build:
+      context: .
+    container_name: embulk
+    volumes:
+      - ./opt:/root/opt
+      - ./.credential:/root/.credential
+    env_file:
+      - ./.env

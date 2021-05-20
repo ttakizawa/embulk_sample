@@ -1,0 +1,5 @@
+in:
+  type: file
+  path_prefix: "/root/opt/csv/sample"
+out:
+  type: stdout
